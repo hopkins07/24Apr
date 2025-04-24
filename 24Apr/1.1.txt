@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Declarative Hello World</title>
+</head>
+<body>
+  <div id="root"></div>
+  <script>
+    import React from 'https://esm.sh/react';
+import ReactDOM from 'https://esm.sh/react-dom';
+
+function App() {
+  return <p>Hello, World!</p>;
+}
+
+ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
+</body>
+</html>

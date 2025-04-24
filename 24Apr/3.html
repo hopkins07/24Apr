@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Virtual DOM vs Traditional DOM</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      gap: 40px;
+      padding: 20px;
+    }
+    .box {
+      border: 1px solid #ccc;
+      padding: 20px;
+      width: 45%;
+    }
+    h2 {
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Vanilla JS (Imperative)</h2>
+    <h3 id="vanilla-title">Initial Title</h3>
+    <p>Vanilla DOM updates: <span id="vanilla-count">0</span></p>
+    <button onclick="updateVanillaTitle()">Change Title (Vanilla JS)</button>
+  </div>
+
+  <div id="react-root" class="box"></div>
+
+  <script>
+    let vanillaCount = 0;
+    function updateVanillaTitle() {
+      vanillaCount++;
+      document.title = `Vanilla Title ${vanillaCount}`;
+      document.getElementById("vanilla-title").textContent = `Vanilla Title ${vanillaCount}`;
+      document.getElementById("vanilla-count").textContent = vanillaCount;
+    }
+  </script>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    function App() {
+      const [title, setTitle] = useState("Initial Title");
+      const [reactCount, setReactCount] = useState(0);
+
+      const handleReactClick = () => {
+        const newCount = reactCount + 1;
+        setTitle(`React Title ${newCount}`);
+        setReactCount(newCount);
+        document.title = `React Title ${newCount}`;
+      };
+
+      return (
+        <div>
+          <h2>React (Declarative)</h2>
+          <h3>{title}</h3>
+          <p>React DOM updates: {reactCount}</p>
+          <button onClick={handleReactClick}>Change Title (React)</button>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById("react-root"));
+    root.render(<App />);
+  </script>
+</body>
+</html>
